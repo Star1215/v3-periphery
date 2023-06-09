@@ -16,32 +16,16 @@ import './libraries/TokenRatioSortOrder.sol';
 /// @title Describes NFT token positions
 /// @notice Produces a string containing the data URI for a JSON metadata string
 contract NonfungibleTokenPositionDescriptor is INonfungibleTokenPositionDescriptor {
-    address private constant DAI = 0x6B175474E89094C44Da98b954EedeAC495271d0F;
-    address private constant USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
-    address private constant USDT = 0xdAC17F958D2ee523a2206206994597C13D831ec7;
-    address private constant TBTC = 0x8dAEBADE922dF735c38C80C7eBD708Af50815fAa;
-    address private constant WBTC = 0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599;
+    address private constant DAI = 0x3e7676937A7E96CFB7616f255b9AD9FF47363D4b;	
+    address private constant USDC = 0x0faF6df7054946141266420b43783387A78d82A9;	
+    address private constant USDT = 0x0faF6df7054946141266420b43783387A78d82A9;	
+    address private constant TBTC = 0x0BfcE1D53451B4a8175DD94e6e029F7d8a701e9c;	
+    address private constant WBTC = 0x0BfcE1D53451B4a8175DD94e6e029F7d8a701e9c;
 
     address public immutable WETH9;
-    /// @dev A null-terminated string
-    bytes32 public immutable nativeCurrencyLabelBytes;
 
-    constructor(address _WETH9, bytes32 _nativeCurrencyLabelBytes) {
+    constructor(address _WETH9) {
         WETH9 = _WETH9;
-        nativeCurrencyLabelBytes = _nativeCurrencyLabelBytes;
-    }
-
-    /// @notice Returns the native currency label as a string
-    function nativeCurrencyLabel() public view returns (string memory) {
-        uint256 len = 0;
-        while (len < 32 && nativeCurrencyLabelBytes[len] != 0) {
-            len++;
-        }
-        bytes memory b = new bytes(len);
-        for (uint256 i = 0; i < len; i++) {
-            b[i] = nativeCurrencyLabelBytes[i];
-        }
-        return string(b);
     }
 
     /// @inheritdoc INonfungibleTokenPositionDescriptor
@@ -73,12 +57,8 @@ contract NonfungibleTokenPositionDescriptor is INonfungibleTokenPositionDescript
                     tokenId: tokenId,
                     quoteTokenAddress: quoteTokenAddress,
                     baseTokenAddress: baseTokenAddress,
-                    quoteTokenSymbol: quoteTokenAddress == WETH9
-                        ? nativeCurrencyLabel()
-                        : SafeERC20Namer.tokenSymbol(quoteTokenAddress),
-                    baseTokenSymbol: baseTokenAddress == WETH9
-                        ? nativeCurrencyLabel()
-                        : SafeERC20Namer.tokenSymbol(baseTokenAddress),
+                    quoteTokenSymbol: SafeERC20Namer.tokenSymbol(quoteTokenAddress),
+                    baseTokenSymbol: SafeERC20Namer.tokenSymbol(baseTokenAddress),
                     quoteTokenDecimals: IERC20Metadata(quoteTokenAddress).decimals(),
                     baseTokenDecimals: IERC20Metadata(baseTokenAddress).decimals(),
                     flipRatio: _flipRatio,

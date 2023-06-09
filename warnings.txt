@@ -1,0 +1,35 @@
+<!-- ProxyAdmin.sol -->
+
+──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Warning: It looks like you are using '<address payable>.send/transfer(<X>)' without providing    │
+│ the gas amount. Such calls will fail depending on the pubdata costs.                             │
+│ This might be a false positive if you are using some interface (like IERC20) instead of the      │
+│ native Solidity send/transfer                                                                    │
+│ Please use 'payable(<address>).call{value: <X>}("")' instead.                                    │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+--> contracts/mocks/token/ERC20NoReturnMock.sol
+
+
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Warning: It looks like you are using '<address payable>.send/transfer(<X>)' without providing    │
+│ the gas amount. Such calls will fail depending on the pubdata costs.                             │
+│ This might be a false positive if you are using some interface (like IERC20) instead of the      │
+│ native Solidity send/transfer                                                                    │
+│ Please use 'payable(<address>).call{value: <X>}("")' instead.                                    │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+--> contracts/mocks/token/ERC777SenderRecipientMock.sol
+
+
+
+
+<!-- V3Staker -->
+┌──────────────────────────────────────────────────────────────────────────────────────────────────┐
+│ Warning: It looks like your code or one of its dependencies uses the 'extcodesize' instruction,  │
+│ which is usually needed in the following cases:                                                  │
+│   1. To detect whether an address belongs to a smart contract.                                   │
+│   2. To detect whether the deploy code execution has finished.                                   │
+│ zkSync era comes with native account abstraction support (so accounts are smart contracts,       │
+│ including private-key controlled EOAs), and you should avoid differentiating between contracts   │
+│ and non-contract addresses.                                                                      │
+└──────────────────────────────────────────────────────────────────────────────────────────────────┘
+--> @openzeppelin/contracts/utils/Address.sol

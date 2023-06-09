@@ -3,7 +3,9 @@ pragma solidity >=0.5.0;
 
 /// @title Provides functions for deriving a pool address from the factory, tokens, and the fee
 library PoolAddress {
-    bytes32 internal constant POOL_INIT_CODE_HASH = 0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54;
+    bytes32 internal constant POOL_INIT_CODE_HASH = 0x010011b5a863aee85f9ffb9ff5152cfcd202f5f5ce21f1aeb7c57d30537ffb28;
+    bytes32 internal constant CREATE2_PREFIX = 0x2020dba91b30cc0006188af794c2fb30dd8520db7e2c088b7fc7c103c00ca494;
+    bytes32 internal constant ZERO_INPUT_HASH = 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470;
 
     /// @notice The identifying key of the pool
     struct PoolKey {
@@ -36,10 +38,11 @@ library PoolAddress {
             uint256(
                 keccak256(
                     abi.encodePacked(
-                        hex'ff',
-                        factory,
+                        CREATE2_PREFIX,
+                        bytes32(uint256(factory)),
                         keccak256(abi.encode(key.token0, key.token1, key.fee)),
-                        POOL_INIT_CODE_HASH
+                        POOL_INIT_CODE_HASH,
+                        ZERO_INPUT_HASH
                     )
                 )
             )
